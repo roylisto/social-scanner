@@ -1,0 +1,25 @@
+version: "3"
+
+volumes:
+  node_modules: null
+
+services:
+  orion-api-development:
+    image: "neubula/orion-api/development:latest"
+    container_name: orion-api
+    build:
+      context: .
+      dockerfile: main.Dockerfile
+    ports:
+      - "3000:3000"
+    command: |
+      docker/development/start-orion-api.sh
+    working_dir: /project/orion-api
+    volumes:
+      - ../../:/project/orion-api
+      - node_modules:/project/orion-api/node_modules
+    networks:
+      - neubula
+
+networks:
+  neubula:
